@@ -6,7 +6,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#4338ca] text-white px-4 sm:px-6 lg:px-8 py-10">
       <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col  gap-2">
           <div className="flex items-center gap-2">
             <Film className="text-white" />
             <span className="font-bold italic">Movie Z</span>

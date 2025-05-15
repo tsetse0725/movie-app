@@ -53,7 +53,6 @@ export default function GenreSelector() {
   const [open, setOpen] = useState(false);
 
   if (isDesktop) {
-    // 🖥️ Desktop Popover
     return (
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
@@ -85,7 +84,6 @@ export default function GenreSelector() {
     );
   }
 
-  // 📱 Mobile Sheet
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
