@@ -1,7 +1,6 @@
 "use client";
 
 import { ChevronDown } from "lucide-react";
-
 import {
   Popover,
   PopoverContent,
@@ -51,6 +50,11 @@ const genres = [
 export default function GenreSelector() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const [open, setOpen] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+
+  const handleClick = (genre: string) => {
+    setSelectedGenre((prev) => (prev === genre ? null : genre));
+  };
 
   if (isDesktop) {
     return (
@@ -66,24 +70,32 @@ export default function GenreSelector() {
             See lists of movies by genre
           </p>
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {genres.map((genre) => (
-              <button
-                key={genre}
-                className="flex justify-between items-center px-3 py-1.5 border rounded hover:bg-accent text-sm"
-                onClick={() => {
-                  console.log("Selected genre:", genre);
-                  setOpen(false);
-                }}
-              >
-                {genre} <span>›</span>
-              </button>
-            ))}
+            {genres.map((genre) => {
+              const isSelected = selectedGenre === genre;
+              return (
+                <button
+                  key={genre}
+                  onClick={() => handleClick(genre)}
+                  className={`flex justify-between items-center px-3 py-1.5 border rounded text-sm transition
+    ${
+      isSelected
+        ? "bg-black text-white dark:bg-white dark:text-black"
+        : "bg-white text-black dark:bg-black dark:text-white hover:bg-accent"
+    }
+  `}
+                >
+                  {genre}
+                  <span>{isSelected ? "×" : "›"}</span>
+                </button>
+              );
+            })}
           </div>
         </PopoverContent>
       </Popover>
     );
   }
 
+  // 📱 Mobile view
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -91,27 +103,34 @@ export default function GenreSelector() {
           <ChevronDown className="h-4 w-4" />
         </Button>
       </SheetTrigger>
-      <SheetContent side="bottom" className="h-[85%] px-4 py-6">
+      <SheetContent side="top" className="h-[85%] px-4 py-6">
         <SheetHeader>
           <SheetTitle className="text-lg">Genres</SheetTitle>
           <p className="text-sm text-muted-foreground">
             See lists of movies by genre
           </p>
         </SheetHeader>
-
         <div className="grid grid-cols-2 gap-2 mt-6">
-          {genres.map((genre) => (
-            <button
-              key={genre}
-              className="flex justify-between items-center px-3 py-1.5 border rounded hover:bg-accent text-sm"
-              onClick={() => {
-                console.log("Selected genre:", genre);
-                setOpen(false);
-              }}
-            >
-              {genre} <span>›</span>
-            </button>
-          ))}
+          {genres.map((genre) => {
+            const isSelected = selectedGenre === genre;
+            return (
+              <button
+                key={genre}
+                onClick={() => handleClick(genre)}
+                className={`flex justify-between items-center px-3 py-1.5 border rounded text-sm transition
+                  hover:bg-accent
+                  ${
+                    isSelected
+                      ? "bg-black text-white dark:bg-white dark:text-black"
+                      : "bg-white text-black dark:bg-black dark:text-white"
+                  }
+                `}
+              >
+                {genre}
+                <span>{isSelected ? "×" : "›"}</span>
+              </button>
+            );
+          })}
         </div>
       </SheetContent>
     </Sheet>

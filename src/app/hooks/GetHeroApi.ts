@@ -2,7 +2,7 @@ import axios from "axios";
 
 export const GetHeroApi = async () => {
   const result = await axios.get(
-    `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
+    `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1`,
     {
       headers: {
         "Content-Type": "application/json",
@@ -11,4 +11,6 @@ export const GetHeroApi = async () => {
       },
     }
   );
+
+  return result?.data;
 };
