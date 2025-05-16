@@ -13,11 +13,7 @@ export default async function Home() {
   return (
     <>
       <Header />
-
-      {/* Hero section fetch дотроо */}
       <HeroSection />
-
-      {/* Movie lists */}
       <MovieSection title="Upcoming" movies={upcoming.results} />
       <MovieSection title="Popular" movies={popular.results} />
       <MovieSection title="Top Rated" movies={topRated.results} />

@@ -1,7 +1,5 @@
 "use client";
 
-import Image from "next/image";
-
 type Props = {
   title: string;
   movies: any[];
