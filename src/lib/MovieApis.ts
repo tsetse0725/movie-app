@@ -32,3 +32,39 @@ export const GetTopRatedApi = async () => {
   );
   return result.data;
 };
+
+// 🆕 Movie Detail
+export const GetMovieDetailApi = async (id: string) => {
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+    { headers }
+  );
+  return result.data;
+};
+
+// 🆕 Movie Videos
+export const GetMovieVideosApi = async (id: string) => {
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+    { headers }
+  );
+  return result.data;
+};
+
+// 🆕 Movie Credits
+export const GetMovieCreditsApi = async (id: string) => {
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
+    { headers }
+  );
+  return result.data;
+};
+
+// 🆕 Similar Movies
+export const GetSimilarMoviesApi = async (id: string) => {
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`,
+    { headers }
+  );
+  return result.data;
+};

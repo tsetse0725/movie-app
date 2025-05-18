@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { Film, Search, Sun, Moon, X } from "lucide-react";
 import { useMediaQuery } from "@/lib/use-media-query";
 import GenreSelector from "./GenreSelector";
+import Link from "next/link";
 
 export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
@@ -23,8 +24,13 @@ export default function Header() {
     <header className="flex items-center justify-between px-4 py-3 border-b dark:border-gray-700 relative">
       <div className="flex items-center gap-2">
         {!isDesktop && <GenreSelector />}
-        <Film className="text-purple-600" />
-        <span className="font-bold text-lg text-purple-600">Movie Z</span>
+        <Link
+          href="/"
+          className="flex items-center gap-2 text-purple-600 font-bold italic text-lg"
+        >
+          <Film className="w-5 h-5" />
+          <span>Movie Z</span>
+        </Link>
       </div>
 
       <div className="hidden md:flex items-center gap-2 flex-1 justify-center max-w-[600px]">

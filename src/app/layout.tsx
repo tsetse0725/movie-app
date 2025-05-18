@@ -1,3 +1,4 @@
+import Header from "@/app/_components/Header";
 import { ThemeProvider } from "next-themes";
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
@@ -35,6 +36,7 @@ export default function RootLayout({
           defaultTheme="system"
           enableSystem={false}
         >
+          <Header />
           {children}
 
           <Footer />

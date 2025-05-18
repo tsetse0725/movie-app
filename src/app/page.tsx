@@ -1,4 +1,3 @@
-import Header from "@/app/_components/Header";
 import HeroSection from "@/app/_components/HeroSection";
 import MovieSection from "@/app/_components/MovieSection";
 import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
@@ -12,7 +11,6 @@ export default async function Home() {
 
   return (
     <>
-      <Header />
       <HeroSection />
       <MovieSection title="Upcoming" movies={upcoming.results} />
       <MovieSection title="Popular" movies={popular.results} />
