@@ -14,6 +14,7 @@ interface DetailProps {
     release_date: string;
     runtime: number;
     vote_average: number;
+    vote_count: number;
   };
   credits: {
     cast: { name: string }[];
@@ -25,6 +26,7 @@ interface DetailProps {
     title: string;
     poster_path: string;
     vote_average: number;
+    vote_count: number;
   }[];
 }
 
@@ -49,14 +51,21 @@ export const Detail = ({
 
   const stars = credits.cast.map((a: { name: string }) => a.name).slice(0, 3);
 
+  const formatVotes = (n: number) =>
+    n >= 1000 ? `${Math.round(n / 1000)}K` : n.toString();
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-10 text-black dark:text-white">
       {/* Title + meta */}
       <h1 className="text-3xl font-bold mb-2">{movie.title}</h1>
       <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400 mb-6">
         <span>{movie.release_date}</span>
+        <span>PG-13</span> {/* ← Гараар нэмсэн зэрэглэл */}
         <span>{movie.runtime} min</span>
-        <span>⭐ {movie.vote_average.toFixed(1)}/10</span>
+        <span>
+          ⭐ {movie.vote_average.toFixed(1)}/10 ·{" "}
+          {formatVotes(movie.vote_count)} votes
+        </span>
       </div>
 
       {/* Layout → Poster + Backdrop */}
@@ -82,7 +91,7 @@ export const Detail = ({
                 className="absolute bottom-4 left-4 flex items-center gap-2 bg-white/90 text-black px-4 py-2 rounded-full shadow hover:bg-white transition"
               >
                 <PlayCircle className="w-5 h-5" />
-                <span>Play trailer · 2:35</span>
+                <span>Play trailer</span>
               </button>
             </>
           ) : (

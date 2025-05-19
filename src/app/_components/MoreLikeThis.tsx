@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 
 interface Movie {
   id: number;
@@ -34,26 +35,27 @@ export const MoreLikeThis = ({ similar }: { similar: Movie[] }) => {
       {/* Movie Cards */}
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
         {moviesToShow.map((m) => (
-          <div
-            key={m.id}
-            className="bg-white dark:bg-zinc-800 rounded shadow text-center"
-          >
-            <img
-              src={
-                m.poster_path
-                  ? `https://image.tmdb.org/t/p/w300${m.poster_path}`
-                  : "/no-poster.png"
-              }
-              alt={m.title}
-              className="rounded-t w-full h-[85%] object-cover"
-            />
-            <div className="px-2 py-2 text-xs">
-              <div className="flex items-center justify-center gap-1 text-yellow-500">
-                ⭐ {m.vote_average?.toFixed(1) || "N/A"}/10
+          <Link href={`/details/${m.id}`} key={m.id}>
+            <div className="bg-white dark:bg-zinc-800 rounded shadow text-center cursor-pointer hover:scale-[1.02] transition">
+              <img
+                src={
+                  m.poster_path
+                    ? `https://image.tmdb.org/t/p/w300${m.poster_path}`
+                    : "/no-poster.png"
+                }
+                alt={m.title}
+                className="rounded-t w-full h-[85%] object-cover"
+              />
+              <div className="px-2 py-2 text-xs">
+                <div className="flex items-center justify-center gap-1 text-yellow-500">
+                  ⭐ {m.vote_average?.toFixed(1) || "N/A"}/10
+                </div>
+                <p className="mt-1 text-black dark:text-white truncate">
+                  {m.title}
+                </p>
               </div>
-              <p className="mt-1 text-black dark:text-white">{m.title}</p>
             </div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

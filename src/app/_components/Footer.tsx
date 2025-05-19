@@ -3,6 +3,24 @@
 import { Mail, Phone, Film } from "lucide-react";
 
 export default function Footer() {
+  const handleClick = async () => {
+    const id = "926393"; // Wicked movie example ID
+    try {
+      const res = await fetch(
+        `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`,
+        {
+          headers: {
+            Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNjdkOGJlYmQwZjRmZjM0NWY2NTA1Yzk5ZTlkMDI4OSIsIm5iZiI6MTc0MjE3NTA4OS4zODksInN1YiI6IjY3ZDc3YjcxODVkMTM5MjFiNTAxNDE1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KxFMnZppBdHUSz_zB4p9A_gRD16I_R6OX1oiEe0LbE8`, // <-- өөрийнхөө TMDB Bearer Token оруулна
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      const data = await res.json();
+      console.log("🎬 Movie Detail:", data);
+    } catch (error) {
+      console.error("❌ Error:", error);
+    }
+  };
   return (
     <footer className="bg-[#3f34c4] text-white px-4 sm:px-6 py-10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10">
@@ -36,7 +54,15 @@ export default function Footer() {
           <div className="flex flex-col md:items-start md:text-left items-center text-center">
             <h4 className="font-semibold mb-2">Follow us</h4>
             <div className="flex flex-col md:flex-row md:gap-4 gap-1">
-              <a href="#">Facebook</a>
+              <a
+                href="#"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleClick();
+                }}
+              >
+                Facebook
+              </a>
               <a href="#">Instagram</a>
               <a href="#">Twitter</a>
               <a href="#">Youtube</a>

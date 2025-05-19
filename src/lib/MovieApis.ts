@@ -7,7 +7,7 @@ const headers = {
 };
 
 // Upcoming
-export const GetUpcomingApi = async () => {
+export const GetUpcomingApi = async (page = 1) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1`,
     { headers }
@@ -16,7 +16,7 @@ export const GetUpcomingApi = async () => {
 };
 
 // Popular
-export const GetPopularApi = async () => {
+export const GetPopularApi = async (page = 1) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/popular?language=en-US&page=1`,
     { headers }
@@ -25,7 +25,7 @@ export const GetPopularApi = async () => {
 };
 
 // Top Rated
-export const GetTopRatedApi = async () => {
+export const GetTopRatedApi = async (page = 1) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=1`,
     { headers }

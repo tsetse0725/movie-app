@@ -37,7 +37,6 @@ export default function HeroSection() {
     fetchData();
   }, []);
 
-  // 🔑 ESC товч
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -70,51 +69,55 @@ export default function HeroSection() {
         <CarouselContent>
           {movies.map((movie) => (
             <CarouselItem key={movie.id}>
-              <section className="relative w-full h-[500px] overflow-hidden">
-                {/* 🖼 Зураг дээр дарахад */}
+              <section className="relative w-full h-[600px] overflow-hidden">
+                {/* 📷 Зураг */}
                 <Link href={`/details/${movie.id}`}>
                   <img
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                     alt={movie.title}
-                    className="absolute inset-0 h-full w-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover object-center"
                   />
                 </Link>
 
+                {/* 🌓 Хар сүүдэрлэлтийг нэмэх */}
                 <div className="absolute inset-0 bg-black/40" />
 
-                <div className="relative z-10 max-w-4xl px-6 py-12 text-white ml-12">
-                  <h2 className="text-sm">Now Playing:</h2>
+                {/* 📄 Текст контентууд */}
+                <div className="relative z-10 max-w-[1440px] h-full mx-auto px-6 flex items-center">
+                  <div className="text-white max-w-xl ml-6">
+                    <h2 className="text-sm mb-1">Now Playing:</h2>
 
-                  <Link href={`/details/${movie.id}`}>
-                    <h1 className="text-4xl font-bold mb-2 hover:underline cursor-pointer">
-                      {movie.title}
-                    </h1>
-                  </Link>
+                    <Link href={`/details/${movie.id}`}>
+                      <h1 className="text-4xl font-bold mb-2 hover:underline cursor-pointer">
+                        {movie.title}
+                      </h1>
+                    </Link>
 
-                  <div className="flex items-center gap-1 text-yellow-400 font-semibold mb-3">
-                    ⭐ {movie.vote_average.toFixed(1)}
-                    <span className="text-white/70 text-sm"> / 10</span>
+                    <div className="flex items-center gap-1 text-yellow-400 font-semibold mb-3">
+                      ⭐ {movie.vote_average.toFixed(1)}
+                      <span className="text-white/70 text-sm"> / 10</span>
+                    </div>
+
+                    <p className="text-sm text-white/80 mb-4 line-clamp-3">
+                      {movie.overview}
+                    </p>
+
+                    {movie.trailerKey ? (
+                      <button
+                        className="px-4 py-2 bg-white text-black rounded font-semibold hover:bg-gray-200 transition"
+                        onClick={() => handlePlayTrailer(movie.trailerKey)}
+                      >
+                        ▶ Watch Trailer
+                      </button>
+                    ) : (
+                      <button
+                        className="px-4 py-2 bg-gray-400 text-white rounded font-semibold cursor-not-allowed"
+                        disabled
+                      >
+                        No Trailer
+                      </button>
+                    )}
                   </div>
-
-                  <p className="text-sm text-white/80 mb-4 line-clamp-3">
-                    {movie.overview}
-                  </p>
-
-                  {movie.trailerKey ? (
-                    <button
-                      className="px-4 py-2 bg-white text-black rounded font-semibold hover:bg-gray-200 transition"
-                      onClick={() => handlePlayTrailer(movie.trailerKey)}
-                    >
-                      ▶ Watch Trailer
-                    </button>
-                  ) : (
-                    <button
-                      className="px-4 py-2 bg-gray-400 text-white rounded font-semibold cursor-not-allowed"
-                      disabled
-                    >
-                      No Trailer
-                    </button>
-                  )}
                 </div>
               </section>
             </CarouselItem>
@@ -125,17 +128,17 @@ export default function HeroSection() {
         <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-black" />
       </Carousel>
 
-      {/* 🎬 Trailer- ESC болон гадна дарвал хаагдана */}
+      {/* 🎬 Trailer Modal */}
       {showTrailer && selectedTrailerKey && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
           onClick={(e) => {
             if (e.target === e.currentTarget) {
-              closeModal(); // гадна хэсэг дээр дарсан үед
+              closeModal();
             }
           }}
         >
-          <div className="relative w-full max-w-4xl object-cover bg-black">
+          <div className="relative w-full max-w-4xl aspect-video bg-black rounded overflow-hidden shadow-lg">
             <iframe
               src={`https://www.youtube.com/embed/${selectedTrailerKey}?autoplay=1`}
               allow="autoplay; encrypted-media"
