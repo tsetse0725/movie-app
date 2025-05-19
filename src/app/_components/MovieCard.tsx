@@ -16,7 +16,6 @@ interface MovieCardProps {
 
 export const MovieCard = ({ movie }: MovieCardProps) => {
   if (!movie?.id || typeof movie.id !== "number") {
-    console.warn("⚠️ MovieCard skipped: invalid ID", movie);
     return null;
   }
 

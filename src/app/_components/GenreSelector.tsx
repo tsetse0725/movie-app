@@ -95,7 +95,7 @@ export default function GenreSelector() {
     );
   }
 
-  // 📱 Mobile view
+  //  Mobile view
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>

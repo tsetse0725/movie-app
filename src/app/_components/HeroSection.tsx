@@ -37,7 +37,7 @@ export default function HeroSection() {
     fetchData();
   }, []);
 
-  // 🔑 ESC товч → Modal хаах
+  // 🔑 ESC товч
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
@@ -76,7 +76,7 @@ export default function HeroSection() {
                   <img
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                     alt={movie.title}
-                    className="absolute inset-0 w-full h-full object-cover"
+                    className="absolute inset-0 h-full w-full object-cover"
                   />
                 </Link>
 
@@ -112,7 +112,7 @@ export default function HeroSection() {
                       className="px-4 py-2 bg-gray-400 text-white rounded font-semibold cursor-not-allowed"
                       disabled
                     >
-                      🚫 No Trailer
+                      No Trailer
                     </button>
                   )}
                 </div>
@@ -125,7 +125,7 @@ export default function HeroSection() {
         <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-black" />
       </Carousel>
 
-      {/* 🎬 Trailer Modal - ESC болон гадна дарвал хаагдана */}
+      {/* 🎬 Trailer- ESC болон гадна дарвал хаагдана */}
       {showTrailer && selectedTrailerKey && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"
@@ -135,7 +135,7 @@ export default function HeroSection() {
             }
           }}
         >
-          <div className="relative w-full max-w-4xl aspect-video bg-black">
+          <div className="relative w-full max-w-4xl object-cover bg-black">
             <iframe
               src={`https://www.youtube.com/embed/${selectedTrailerKey}?autoplay=1`}
               allow="autoplay; encrypted-media"
