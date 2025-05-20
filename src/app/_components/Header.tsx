@@ -6,12 +6,12 @@ import { Film, Search, Sun, Moon, X } from "lucide-react";
 import { useMediaQuery } from "@/lib/use-media-query";
 import GenreSelector from "./GenreSelector";
 import Link from "next/link";
+import SearchDropdown from "./SearchDropdown";
 
 export default function Header() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
   const { theme, setTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
-  const [search, setSearch] = useState("");
   const [showMobileSearch, setShowMobileSearch] = useState(false);
 
   useEffect(() => {
@@ -22,6 +22,7 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between px-4 py-3 border-b dark:border-gray-700 relative">
+      {/* Зүүн тал: Logo + Genre */}
       <div className="flex items-center gap-2">
         {!isDesktop && <GenreSelector />}
         <Link
@@ -33,28 +34,13 @@ export default function Header() {
         </Link>
       </div>
 
+      {/* 🆕 Desktop хайлт: Genre + Autocomplete */}
       <div className="hidden md:flex items-center gap-2 flex-1 justify-center max-w-[600px]">
         <GenreSelector />
-        <div className="relative w-full max-w-sm">
-          <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-          <input
-            type="text"
-            placeholder="Search.."
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            className="pl-8 pr-3 py-1 w-full border rounded dark:bg-gray-800 dark:text-white"
-          />
-          {search && (
-            <button
-              onClick={() => setSearch("")}
-              className="absolute right-2 text-gray-500"
-            >
-              <X className="h-4 w-4" />
-            </button>
-          )}
-        </div>
+        <SearchDropdown />
       </div>
 
+      {/* Theme toggle + Mobile search toggle */}
       <div className="flex items-center gap-2">
         <button
           onClick={() => setShowMobileSearch((prev) => !prev)}
@@ -79,26 +65,10 @@ export default function Header() {
         </button>
       </div>
 
+      {/* 🆕 Mobile хайлт */}
       {showMobileSearch && (
-        <div className="absolute top-full left-0 w-full px-4 py-2 bg-white dark:bg-gray-900 shadow-md md:hidden animate-fade-in">
-          <div className="relative w-full">
-            <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <input
-              type="text"
-              placeholder="Search.."
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="pl-8 pr-3 py-2 w-full border rounded dark:bg-gray-800 dark:text-white"
-            />
-            {search && (
-              <button
-                onClick={() => setSearch("")}
-                className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
-              >
-                <X className="h-4 w-4" />
-              </button>
-            )}
-          </div>
+        <div className="absolute top-full left-0 w-full px-4 py-2 bg-white dark:bg-gray-900 shadow-md md:hidden animate-fade-in z-50">
+          <SearchDropdown />
         </div>
       )}
     </header>

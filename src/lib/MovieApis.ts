@@ -33,7 +33,7 @@ export const GetTopRatedApi = async (page = 1) => {
   return result.data;
 };
 
-// 🆕 Movie Detail
+//  Movie Detail
 export const GetMovieDetailApi = async (id: string) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
@@ -42,7 +42,7 @@ export const GetMovieDetailApi = async (id: string) => {
   return result.data;
 };
 
-// 🆕 Movie Videos
+//  Movie Videos
 export const GetMovieVideosApi = async (id: string) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
@@ -51,7 +51,7 @@ export const GetMovieVideosApi = async (id: string) => {
   return result.data;
 };
 
-// 🆕 Movie Credits
+//  Movie Credits
 export const GetMovieCreditsApi = async (id: string) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
@@ -60,10 +60,22 @@ export const GetMovieCreditsApi = async (id: string) => {
   return result.data;
 };
 
-// 🆕 Similar Movies
+//  Similar Movies
 export const GetSimilarMoviesApi = async (id: string) => {
   const result = await axios.get(
     `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1`,
+    { headers }
+  );
+  return result.data;
+};
+
+//  Search Movies
+export const GetSearchMoviesApi = async (query: string, page = 1) => {
+  if (!query) return { results: [] };
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(
+      query
+    )}&language=en-US&page=${page}`,
     { headers }
   );
   return result.data;
