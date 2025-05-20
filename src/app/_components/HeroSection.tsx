@@ -11,6 +11,7 @@ import Autoplay from "embla-carousel-autoplay";
 import { useEffect, useRef, useState } from "react";
 import { GetHeroApi } from "../hooks/GetHeroApi";
 import Link from "next/link";
+import Image from "next/image";
 
 type Movie = {
   id: number;
@@ -69,20 +70,19 @@ export default function HeroSection() {
         <CarouselContent>
           {movies.map((movie) => (
             <CarouselItem key={movie.id}>
-              <section className="relative w-full h-[600px] overflow-hidden">
-                {/* 📷 Зураг */}
+              <section className="relative w-full h-[600px] overflow-hidden xl:h-[1000px]">
+                {/* Зураг */}
                 <Link href={`/details/${movie.id}`}>
-                  <img
+                  <Image
                     src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                     alt={movie.title}
-                    className="absolute inset-0 h-full w-full object-cover object-center"
+                    fill
+                    objectFit="cover"
                   />
                 </Link>
 
-                {/* 🌓 Хар сүүдэрлэлтийг нэмэх */}
                 <div className="absolute inset-0 bg-black/40" />
 
-                {/* 📄 Текст контентууд */}
                 <div className="relative z-10 max-w-[1440px] h-full mx-auto px-6 flex items-center">
                   <div className="text-white max-w-xl ml-6">
                     <h2 className="text-sm mb-1">Now Playing:</h2>

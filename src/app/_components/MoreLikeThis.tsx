@@ -44,7 +44,7 @@ export const MoreLikeThis = ({ similar }: { similar: Movie[] }) => {
                     : "/no-poster.png"
                 }
                 alt={m.title}
-                className="rounded-t w-full h-[85%] object-cover"
+                className="rounded-t w-full h-[full] object-cover"
               />
               <div className="px-2 py-2 text-xs">
                 <div className="flex items-center justify-center gap-1 text-yellow-500">
