@@ -80,3 +80,11 @@ export const GetSearchMoviesApi = async (query: string, page = 1) => {
   );
   return result.data;
 };
+
+export const GetMoviesByGenre = async (genreId: number, page = 1) => {
+  const res = await axios.get(
+    `https://api.themoviedb.org/3/discover/movie?language=en-US&with_genres=${genreId}&page=${page}`,
+    { headers }
+  );
+  return res.data;
+};

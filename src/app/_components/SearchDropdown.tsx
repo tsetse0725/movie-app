@@ -14,7 +14,6 @@ export default function SearchDropdown() {
 
   const router = useRouter();
 
-  // ⏳ Debounced Search
   useEffect(() => {
     const delay = setTimeout(() => {
       if (query.trim()) {
@@ -82,33 +81,56 @@ export default function SearchDropdown() {
           ) : results.length === 0 ? (
             <p className="p-4 text-sm text-gray-500">No results found</p>
           ) : (
-            results.map((movie) => (
-              <Link
-                key={movie.id}
-                href={`/details/${movie.id}`}
-                onClick={handleClear}
-                className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
-              >
-                <img
-                  src={
-                    movie.poster_path
-                      ? `https://image.tmdb.org/t/p/w92${movie.poster_path}`
-                      : "/no-poster.png"
-                  }
-                  alt={movie.title}
-                  className="w-10 h-14 object-cover rounded"
-                />
-                <div>
-                  <h3 className="font-medium text-sm text-black dark:text-white">
-                    {movie.title}
-                  </h3>
-                  <p className="text-xs text-gray-500 dark:text-gray-400">
-                    ⭐ {movie.vote_average?.toFixed(1)} | 📅{" "}
-                    {movie.release_date || "TBA"}
-                  </p>
+            <>
+              {results.map((movie) => (
+                <div key={movie.id} className="border-b dark:border-gray-700">
+                  <Link
+                    href={`/details/${movie.id}`}
+                    onClick={handleClear}
+                    className="flex items-center gap-3 p-2 hover:bg-gray-100 dark:hover:bg-gray-700"
+                  >
+                    <img
+                      src={
+                        movie.poster_path
+                          ? `https://image.tmdb.org/t/p/w92${movie.poster_path}`
+                          : "/no-poster.png"
+                      }
+                      alt={movie.title}
+                      className="w-10 h-14 object-cover rounded"
+                    />
+                    <div>
+                      <h3 className="font-medium text-sm text-black dark:text-white">
+                        {movie.title}
+                      </h3>
+                      <p className="text-xs text-gray-500 dark:text-gray-400">
+                        ⭐ {movie.vote_average?.toFixed(1)} | 📅{" "}
+                        {movie.release_date || "TBA"}
+                      </p>
+                    </div>
+                  </Link>
+
+                  {/* 👉 See more → */}
+                  <div className="text-right pr-4 pb-2">
+                    <Link
+                      href={`/details/${movie.id}`}
+                      onClick={handleClear}
+                      className="text-sm text-black no-underline"
+                    >
+                      See more →
+                    </Link>
+                  </div>
                 </div>
+              ))}
+
+              {/* 🔍 See all results (no underline, black text) */}
+              <Link
+                href={`/search?query=${encodeURIComponent(query.trim())}`}
+                onClick={handleClear}
+                className="block text-center text-sm text-black py-2 border-t dark:border-gray-700"
+              >
+                See all results for "{query.trim()}"
               </Link>
-            ))
+            </>
           )}
         </div>
       )}

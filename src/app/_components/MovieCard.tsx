@@ -21,7 +21,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
 
   return (
     <Link href={`/details/${movie.id}`}>
-      <div className="hover:opacity-80 transition cursor-pointer w-[200px]">
+      <div className="hover:opacity-90 transition cursor-pointer w-full">
         <img
           src={
             movie.poster_path
@@ -31,7 +31,7 @@ export const MovieCard = ({ movie }: MovieCardProps) => {
           alt={movie.title}
           className="rounded w-full h-auto object-cover shadow"
         />
-        <div className="mt-2">
+        <div className="mt-2 space-y-1">
           <h3 className="text-sm font-semibold text-black dark:text-white truncate">
             {movie.title}
           </h3>

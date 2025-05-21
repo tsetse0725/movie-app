@@ -1,5 +1,3 @@
-// app/search/page.tsx
-
 import { GetSearchMoviesApi } from "@/lib/MovieApis";
 import { MovieCard, Movie } from "../_components/MovieCard";
 import Link from "next/link";

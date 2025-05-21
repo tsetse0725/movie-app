@@ -15,46 +15,54 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { useMediaQuery } from "@/lib/use-media-query";
-import { useState } from "react";
-
-const genres = [
-  "Action",
-  "Adventure",
-  "Animation",
-  "Biography",
-  "Comedy",
-  "Crime",
-  "Documentary",
-  "Drama",
-  "Family",
-  "Fantasy",
-  "Film-Noir",
-  "Game-Show",
-  "History",
-  "Horror",
-  "Music",
-  "Musical",
-  "Mystery",
-  "News",
-  "Reality-TV",
-  "Romance",
-  "Sci-Fi",
-  "Short",
-  "Sport",
-  "Talk-Show",
-  "Thriller",
-  "War",
-  "Western",
-];
+import { useParams, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import GenreList from "./GenreList";
 
 export default function GenreSelector() {
   const isDesktop = useMediaQuery("(min-width: 768px)");
-  const [open, setOpen] = useState(false);
-  const [selectedGenre, setSelectedGenre] = useState<string | null>(null);
+  const params = useParams();
+  const router = useRouter();
 
-  const handleClick = (genre: string) => {
-    setSelectedGenre((prev) => (prev === genre ? null : genre));
+  const initialGenreId = parseInt(params?.id as string);
+  const [selectedGenreId, setSelectedGenreId] = useState<number | null>(
+    initialGenreId || null
+  );
+  const [open, setOpen] = useState(false);
+
+  useEffect(() => {
+    if (!isNaN(initialGenreId)) {
+      setSelectedGenreId(initialGenreId);
+    } else {
+      setSelectedGenreId(null);
+    }
+  }, [initialGenreId]);
+
+  const handleGenreClick = (genreId: number) => {
+    if (genreId !== selectedGenreId) {
+      setSelectedGenreId(genreId);
+      router.push(`/genre/${genreId}`);
+      setOpen(false);
+    }
   };
+
+  const handleClear = () => {
+    setSelectedGenreId(null);
+  };
+
+  const content = (
+    <>
+      <h4 className="text-sm font-semibold mb-1">Genres</h4>
+      <p className="text-sm text-muted-foreground mb-4">
+        See lists of movies by genre
+      </p>
+      <GenreList
+        selectedGenreId={selectedGenreId}
+        onSelect={handleGenreClick}
+        onClear={handleClear}
+      />
+    </>
+  );
 
   if (isDesktop) {
     return (
@@ -64,38 +72,11 @@ export default function GenreSelector() {
             Genre
           </Button>
         </PopoverTrigger>
-        <PopoverContent className="w-[650px] p-4">
-          <h4 className="text-sm font-semibold mb-1">Genres</h4>
-          <p className="text-sm text-muted-foreground mb-4">
-            See lists of movies by genre
-          </p>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2">
-            {genres.map((genre) => {
-              const isSelected = selectedGenre === genre;
-              return (
-                <button
-                  key={genre}
-                  onClick={() => handleClick(genre)}
-                  className={`flex justify-between items-center px-3 py-1.5 border rounded text-sm transition
-    ${
-      isSelected
-        ? "bg-black text-white dark:bg-white dark:text-black"
-        : "bg-white text-black dark:bg-black dark:text-white hover:bg-accent"
-    }
-  `}
-                >
-                  {genre}
-                  <span>{isSelected ? "×" : "›"}</span>
-                </button>
-              );
-            })}
-          </div>
-        </PopoverContent>
+        <PopoverContent className="w-[650px] p-4">{content}</PopoverContent>
       </Popover>
     );
   }
 
-  //  Mobile view
   return (
     <Sheet open={open} onOpenChange={setOpen}>
       <SheetTrigger asChild>
@@ -110,27 +91,12 @@ export default function GenreSelector() {
             See lists of movies by genre
           </p>
         </SheetHeader>
-        <div className="grid grid-cols-2 gap-2 mt-6">
-          {genres.map((genre) => {
-            const isSelected = selectedGenre === genre;
-            return (
-              <button
-                key={genre}
-                onClick={() => handleClick(genre)}
-                className={`flex justify-between items-center px-3 py-1.5 border rounded text-sm transition
-                  hover:bg-accent
-                  ${
-                    isSelected
-                      ? "bg-black text-white dark:bg-white dark:text-black"
-                      : "bg-white text-black dark:bg-black dark:text-white"
-                  }
-                `}
-              >
-                {genre}
-                <span>{isSelected ? "×" : "›"}</span>
-              </button>
-            );
-          })}
+        <div className="mt-6">
+          <GenreList
+            selectedGenreId={selectedGenreId}
+            onSelect={handleGenreClick}
+            onClear={handleClear}
+          />
         </div>
       </SheetContent>
     </Sheet>

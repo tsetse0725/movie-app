@@ -7,7 +7,7 @@ export default function Footer() {
     const id = "926393"; // Wicked movie example ID
     try {
       const res = await fetch(
-        `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+        `https://api.themoviedb.org/3/discover/movie?language=en-US&with_genres`,
         {
           headers: {
             Authorization: `Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJkNjdkOGJlYmQwZjRmZjM0NWY2NTA1Yzk5ZTlkMDI4OSIsIm5iZiI6MTc0MjE3NTA4OS4zODksInN1YiI6IjY3ZDc3YjcxODVkMTM5MjFiNTAxNDE1ZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.KxFMnZppBdHUSz_zB4p9A_gRD16I_R6OX1oiEe0LbE8`, // <-- өөрийнхөө TMDB Bearer Token оруулна
