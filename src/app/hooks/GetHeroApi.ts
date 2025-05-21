@@ -14,7 +14,7 @@ export const GetHeroApi = async () => {
 
   const movies = res?.data?.results?.slice(0, 5) || [];
 
-  // 🎬 Трейлер key-г кино бүр дээр авч нэмэх
+  //  Трейлер key-г кино бүр дээр авч нэмэх
   const moviesWithTrailers = await Promise.all(
     movies.map(async (movie: any) => {
       try {
