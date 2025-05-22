@@ -3,15 +3,14 @@
 import { useState, useEffect } from "react";
 import { GetSearchMoviesApi } from "@/lib/MovieApis";
 import Link from "next/link";
-import { Search, X } from "lucide-react";
 import { useRouter } from "next/navigation";
+import SearchInput from "./SearchInput"; // 👈 шинэ component ашиглана
 
 export default function SearchDropdown() {
   const [query, setQuery] = useState("");
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [showDropdown, setShowDropdown] = useState(false);
-
   const router = useRouter();
 
   useEffect(() => {
@@ -43,37 +42,21 @@ export default function SearchDropdown() {
     if (e.key === "Enter" && query.trim()) {
       e.preventDefault();
       router.push(`/search?query=${encodeURIComponent(query.trim())}`);
-      setQuery("");
-      setResults([]);
-      setShowDropdown(false);
+      handleClear();
     }
   };
 
   return (
     <div className="relative w-full max-w-sm">
-      {/* 🔍 Input field */}
-      <div className="relative">
-        <Search className="absolute left-2 top-1/2 -translate-y-1/2 text-gray-400 h-4 w-4" />
-        <input
-          type="text"
-          placeholder="Search movies..."
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          onKeyDown={handleKeyDown}
-          className="pl-8 pr-8 py-2 w-full border rounded dark:bg-gray-800 dark:text-white"
-        />
-        {query && (
-          <button
-            type="button"
-            onClick={handleClear}
-            className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-400"
-          >
-            <X className="h-4 w-4" />
-          </button>
-        )}
-      </div>
+      {/* 🧠 Input хэсгийг тусад нь */}
+      <SearchInput
+        query={query}
+        onChange={setQuery}
+        onClear={handleClear}
+        onKeyDown={handleKeyDown}
+      />
 
-      {/*  Dropdown */}
+      {/* Dropdown хэсэг */}
       {showDropdown && (
         <div className="absolute mt-1 w-full bg-white dark:bg-gray-900 border rounded shadow z-50 max-h-80 overflow-auto">
           {loading ? (
@@ -109,7 +92,6 @@ export default function SearchDropdown() {
                     </div>
                   </Link>
 
-                  {/*  See more → */}
                   <div className="text-right pr-4 pb-2">
                     <Link
                       href={`/details/${movie.id}`}
@@ -122,7 +104,6 @@ export default function SearchDropdown() {
                 </div>
               ))}
 
-              {/*  See all results (no underline, black text) */}
               <Link
                 href={`/search?query=${encodeURIComponent(query.trim())}`}
                 onClick={handleClear}

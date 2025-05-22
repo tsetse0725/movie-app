@@ -28,15 +28,17 @@ export default function GenreSidebar() {
   const router = useRouter();
 
   return (
-    <aside className="w-full md:w-64 mb-8 md:mb-0">
-      <h2 className="text-lg font-semibold mb-2">Search filter</h2>
-      <p className="text-sm text-gray-500 mb-4">See lists of movies by genre</p>
+    <aside className="w-full md:w-[260px] p-4 border rounded-lg shadow-sm bg-white dark:bg-gray-900">
+      <h2 className="text-lg font-semibold mb-2">Search by genre</h2>
+      <p className="text-sm text-gray-500 dark:text-gray-400 mb-4">
+        See lists of movies by genre
+      </p>
       <div className="flex flex-wrap gap-2">
         {genres.map((genre) => (
           <button
             key={genre.id}
             onClick={() => router.push(`/genre/${genre.id}`)}
-            className="px-3 py-1 border rounded text-sm hover:bg-gray-100 dark:hover:bg-gray-800"
+            className="px-3 py-1 text-sm border border-gray-300 dark:border-gray-700 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition"
           >
             {genre.name}
           </button>

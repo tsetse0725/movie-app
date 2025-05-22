@@ -1,21 +1,20 @@
+import DetailPageSkeleton from "@/components/skeleton/DetailPageSkeleton";
+import { Suspense } from "react";
+import { Detail } from "@/app/_components/Detail";
 import {
   GetMovieDetailApi,
   GetMovieCreditsApi,
   GetMovieVideosApi,
   GetSimilarMoviesApi,
 } from "@/lib/MovieApis";
-import { Detail } from "@/app/_components/Detail";
 
 interface PageProps {
   params: { id: string };
 }
 
-const DetailPage = async ({ params }: PageProps) => {
+export default async function DetailPage({ params }: PageProps) {
   const rawId = decodeURIComponent(params.id);
-
-  if (!/^\d+$/.test(rawId)) {
-    throw new Error(`❌ Invalid movie ID: ${rawId}`);
-  }
+  if (!/^\d+$/.test(rawId)) throw new Error("Invalid ID");
 
   const id = rawId;
 
@@ -26,14 +25,19 @@ const DetailPage = async ({ params }: PageProps) => {
     GetSimilarMoviesApi(id),
   ]);
 
-  return (
-    <Detail
-      movie={movie}
-      credits={credits}
-      trailerKey={videos.results[0]?.key}
-      similar={similar.results}
-    />
+  const trailer = videos.results.find(
+    (v: { type: string; site: string }) =>
+      v.type === "Trailer" && v.site === "YouTube"
   );
-};
 
-export default DetailPage;
+  return (
+    <Suspense fallback={<DetailPageSkeleton />}>
+      <Detail
+        movie={movie}
+        credits={credits}
+        trailerKey={trailer?.key || ""}
+        similar={similar.results}
+      />
+    </Suspense>
+  );
+}
