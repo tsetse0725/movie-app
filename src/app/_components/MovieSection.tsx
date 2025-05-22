@@ -18,7 +18,7 @@ export default function MovieSection({ title, movies, type }: Props) {
         {type && (
           <Link
             href={`/browse/${type}`}
-            className="text-sm text-blue-600 hover:underline"
+            className="text-sm text-black hover:no-underline"
           >
             See more →
           </Link>

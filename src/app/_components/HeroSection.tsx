@@ -128,7 +128,7 @@ export default function HeroSection() {
         <CarouselNext className="absolute right-4 top-1/2 -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-black" />
       </Carousel>
 
-      {/* 🎬 Trailer Modal */}
+      {/* Trailer Modal */}
       {showTrailer && selectedTrailerKey && (
         <div
           className="fixed inset-0 bg-black/80 flex items-center justify-center z-50"

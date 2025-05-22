@@ -25,7 +25,7 @@ export const MoreLikeThis = ({ similar }: { similar: Movie[] }) => {
         {similar.length > 10 && (
           <button
             onClick={toggleShow}
-            className="text-sm text-blue-600 hover:underline flex items-center gap-1"
+            className="text-sm text-black hover:no-underline flex items-center gap-1"
           >
             {showAll ? "See less ↑" : "See more →"}
           </button>

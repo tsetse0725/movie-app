@@ -17,11 +17,11 @@ export const Detail = ({
 
       <div className="flex flex-col lg:flex-row gap-6">
         {/* Poster */}
-        <div className="w-full max-w-[250px] aspect-[2/3]">
+        <div className="w-full max-w-[250px] aspect-2/3">
           <img
             src={`https://image.tmdb.org/t/p/w500${movie.poster_path}`}
             alt={movie.title}
-            className="w-full h-full object-cover rounded shadow"
+            className="w-full h-full object-fill rounded shadow"
           />
         </div>
 

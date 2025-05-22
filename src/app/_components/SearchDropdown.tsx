@@ -73,7 +73,7 @@ export default function SearchDropdown() {
         )}
       </div>
 
-      {/* 📋 Dropdown */}
+      {/*  Dropdown */}
       {showDropdown && (
         <div className="absolute mt-1 w-full bg-white dark:bg-gray-900 border rounded shadow z-50 max-h-80 overflow-auto">
           {loading ? (
@@ -109,7 +109,7 @@ export default function SearchDropdown() {
                     </div>
                   </Link>
 
-                  {/* 👉 See more → */}
+                  {/*  See more → */}
                   <div className="text-right pr-4 pb-2">
                     <Link
                       href={`/details/${movie.id}`}
@@ -122,7 +122,7 @@ export default function SearchDropdown() {
                 </div>
               ))}
 
-              {/* 🔍 See all results (no underline, black text) */}
+              {/*  See all results (no underline, black text) */}
               <Link
                 href={`/search?query=${encodeURIComponent(query.trim())}`}
                 onClick={handleClear}

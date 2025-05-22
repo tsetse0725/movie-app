@@ -34,7 +34,7 @@ export default function Header() {
         </Link>
       </div>
 
-      {/* 🆕 Desktop хайлт: Genre + Autocomplete */}
+      {/* Desktop хайлт: Genre + Autocomplete */}
       <div className="hidden md:flex items-center gap-2 flex-1 justify-center max-w-[600px]">
         <GenreSelector />
         <SearchDropdown />
@@ -65,7 +65,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/* 🆕 Mobile хайлт */}
+      {/*  Mobile хайлт */}
       {showMobileSearch && (
         <div className="absolute top-full left-0 w-full px-4 py-2 bg-white dark:bg-gray-900 shadow-md md:hidden animate-fade-in z-50">
           <SearchDropdown />

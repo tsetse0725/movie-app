@@ -25,7 +25,9 @@ const genreMap: Record<number, string> = {
   10402: "Music",
   9648: "Mystery",
   10749: "Romance",
-  878: "Sci-Fi",
+  878: "Science Fiction",
+  10770: "TV Movie",
+  53: "Thriller",
   10752: "War",
   37: "Western",
 };
@@ -60,7 +62,7 @@ export default async function GenrePage({ params, searchParams }: PageProps) {
             ))}
           </div>
 
-          {/* 🔻 Pagination */}
+          {/*  Pagination */}
           <div className="flex justify-center items-center gap-3 mt-10">
             {page > 1 && (
               <Link

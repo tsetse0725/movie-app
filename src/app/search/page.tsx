@@ -27,7 +27,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
         <p>No movies found.</p>
       ) : (
         <>
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
             {movies.map((movie: Movie) => (
               <MovieCard key={movie.id} movie={movie} />
             ))}
