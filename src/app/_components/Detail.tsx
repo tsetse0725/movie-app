@@ -30,7 +30,7 @@ export const Detail = ({
           <TrailerPlayer
             backdrop={movie.backdrop_path}
             trailerKey={trailerKey}
-            variant="figma"
+            variant="second"
           />
         </div>
       </div>

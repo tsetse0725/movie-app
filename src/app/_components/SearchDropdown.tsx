@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { GetSearchMoviesApi } from "@/lib/MovieApis";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import SearchInput from "./SearchInput"; // 👈 шинэ component ашиглана
+import SearchInput from "./SearchInput";
 
 export default function SearchDropdown() {
   const [query, setQuery] = useState("");
@@ -48,7 +48,7 @@ export default function SearchDropdown() {
 
   return (
     <div className="relative w-full max-w-sm">
-      {/* 🧠 Input хэсгийг тусад нь */}
+      {/*  Input хэсгийг тусад нь */}
       <SearchInput
         query={query}
         onChange={setQuery}

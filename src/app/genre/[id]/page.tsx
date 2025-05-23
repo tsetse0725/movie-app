@@ -45,12 +45,12 @@ export default async function GenrePage({ params, searchParams }: PageProps) {
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="flex flex-col md:flex-row gap-6">
-        {/* 🟣 Зүүн талын жанр sidebar */}
+        {/*  Зүүн талын жанр sidebar */}
         <aside className="w-full md:w-64">
           <GenreSidebar />
         </aside>
 
-        {/* 🔵 Кинонуудын жагсаалт */}
+        {/*  Кинонуудын жагсаалт */}
         <section className="flex-1">
           <h1 className="text-xl font-semibold mb-6">
             {totalResults} titles in “{genreName}”

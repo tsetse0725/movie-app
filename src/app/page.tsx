@@ -32,9 +32,17 @@ export default function ClientHome() {
   return (
     <>
       <HeroSection />
-      <MovieSection title="Upcoming" movies={upcoming.results} />
-      <MovieSection title="Popular" movies={popular.results} />
-      <MovieSection title="Top Rated" movies={topRated.results} />
+      <MovieSection
+        title="Upcoming"
+        movies={upcoming.results}
+        type="upcoming"
+      />
+      <MovieSection title="Popular" movies={popular.results} type="popular" />
+      <MovieSection
+        title="Top Rated"
+        movies={topRated.results}
+        type="top_rated"
+      />
     </>
   );
 }

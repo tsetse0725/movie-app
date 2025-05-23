@@ -24,7 +24,6 @@ export default function MovieSection({ title, movies, type }: Props) {
           </Link>
         )}
       </div>
-
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-6">
         {movies.map((movie) => (
           <Link key={movie.id} href={`/details/${movie.id}`}>

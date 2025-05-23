@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 interface TrailerPlayerProps {
   backdrop: string;
   trailerKey: string;
-  variant?: "default" | "figma";
+  variant?: "default" | "second";
 }
 
 export const TrailerPlayer = ({
@@ -41,8 +41,7 @@ export const TrailerPlayer = ({
       <div className="absolute inset-0 bg-black/50">
         {trailerKey && (
           <>
-            {variant === "figma" ? (
-              //  Figma style Play Trailer товч
+            {variant === "second" ? (
               <button
                 onClick={openModal}
                 className="absolute bottom-6 left-6 flex items-center gap-3 bg-white/90 hover:bg-white text-black px-4 py-2 rounded-full shadow transition"
