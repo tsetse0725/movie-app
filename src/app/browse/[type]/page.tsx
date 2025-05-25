@@ -1,7 +1,9 @@
 import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
+import type { JSX } from "react";
 
+// Smart pagination
 function getPaginationRange(
   current: number,
   total: number
@@ -35,6 +37,7 @@ function getPaginationRange(
   return rangeWithDots;
 }
 
+// ✅ Зөв typing + JSX буцаадаг
 export default async function BrowsePage({
   params,
   searchParams,
@@ -54,9 +57,9 @@ export default async function BrowsePage({
   const fetchFunc = fetchMap[type];
   if (!fetchFunc) return notFound();
 
-  const data = await fetchFunc(currentPage);
-  const movies = data.results;
-  const totalPages = data.total_pages;
+  const allData = await fetchFunc(currentPage);
+  const movies = allData.results;
+  const totalPages = allData.total_pages;
 
   const paginationRange = getPaginationRange(currentPage, totalPages);
 
@@ -72,6 +75,7 @@ export default async function BrowsePage({
         ))}
       </div>
 
+      {/* Pagination */}
       <div className="flex justify-end items-center mt-4">
         <div className="flex items-center gap-2 flex-wrap">
           {currentPage > 1 && (
