@@ -2,7 +2,16 @@ import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
 
-// Pagination функц — type тодорхойлсон
+// Movie type тодорхойлсон
+type Movie = {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+};
+
+// Pagination функц
 function getPaginationRange(
   current: number,
   total: number
@@ -36,7 +45,7 @@ function getPaginationRange(
   return rangeWithDots;
 }
 
-// ✅ Буруу PageProps ашиглалгүйгээр INLINE typing хийсэн хувилбар
+// ✅ Inline typing, JSX.Element ашиглаагүй
 export default async function BrowsePage({
   params,
   searchParams,
@@ -49,7 +58,7 @@ export default async function BrowsePage({
 
   const fetchMap: Record<
     string,
-    (page: number) => Promise<{ results: any[]; total_pages: number }>
+    (page: number) => Promise<{ results: Movie[]; total_pages: number }>
   > = {
     upcoming: GetUpcomingApi,
     popular: GetPopularApi,
