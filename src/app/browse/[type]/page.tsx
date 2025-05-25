@@ -1,9 +1,8 @@
 import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
-import type { JSX } from "react";
 
-// Smart pagination
+// ✅ Type тодорхойлсон функц
 function getPaginationRange(
   current: number,
   total: number
@@ -37,18 +36,28 @@ function getPaginationRange(
   return rangeWithDots;
 }
 
-// ✅ Зөв typing + JSX буцаадаг
-export default async function BrowsePage({
-  params,
-  searchParams,
-}: {
+// ✅ Function typing, `params`, `searchParams`, `movie`
+interface Movie {
+  id: number;
+  title: string;
+  poster_path: string;
+  vote_average: number;
+  release_date: string;
+}
+
+interface PageProps {
   params: { type: string };
   searchParams?: { page?: string };
-}): Promise<JSX.Element> {
+}
+
+export default async function BrowsePage({ params, searchParams }: PageProps) {
   const { type } = params;
   const currentPage = parseInt(searchParams?.page || "1");
 
-  const fetchMap: Record<string, (page: number) => Promise<any>> = {
+  const fetchMap: Record<
+    string,
+    (page: number) => Promise<{ results: Movie[]; total_pages: number }>
+  > = {
     upcoming: GetUpcomingApi,
     popular: GetPopularApi,
     top_rated: GetTopRatedApi,
@@ -70,12 +79,11 @@ export default async function BrowsePage({
       </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-8">
-        {movies.map((movie: any) => (
+        {movies.map((movie: Movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-end items-center mt-4">
         <div className="flex items-center gap-2 flex-wrap">
           {currentPage > 1 && (
