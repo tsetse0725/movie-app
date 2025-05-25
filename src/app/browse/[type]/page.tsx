@@ -2,12 +2,6 @@ import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
 
-interface PageProps {
-  params: { type: string };
-  searchParams?: { page?: string };
-}
-
-// 📌 Smart pagination function
 function getPaginationRange(
   current: number,
   total: number
@@ -41,7 +35,13 @@ function getPaginationRange(
   return rangeWithDots;
 }
 
-export default async function BrowsePage({ params, searchParams }: PageProps) {
+export default async function BrowsePage({
+  params,
+  searchParams,
+}: {
+  params: { type: string };
+  searchParams?: { page?: string };
+}): Promise<JSX.Element> {
   const { type } = params;
   const currentPage = parseInt(searchParams?.page || "1");
 
@@ -54,9 +54,9 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
   const fetchFunc = fetchMap[type];
   if (!fetchFunc) return notFound();
 
-  const allData = await fetchFunc(currentPage);
-  const movies = allData.results;
-  const totalPages = allData.total_pages;
+  const data = await fetchFunc(currentPage);
+  const movies = data.results;
+  const totalPages = data.total_pages;
 
   const paginationRange = getPaginationRange(currentPage, totalPages);
 
@@ -72,10 +72,8 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
         ))}
       </div>
 
-      {/* Pagination */}
       <div className="flex justify-end items-center mt-4">
         <div className="flex items-center gap-2 flex-wrap">
-          {/* Previous Button */}
           {currentPage > 1 && (
             <a
               href={`/browse/${type}?page=${currentPage - 1}`}
@@ -85,17 +83,12 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
             </a>
           )}
 
-          {/* Smart Page Buttons */}
-          {paginationRange.map((page, idx) => {
-            if (page === "...") {
-              return (
-                <span key={`dots-${idx}`} className="px-3 py-1 text-gray-400">
-                  ...
-                </span>
-              );
-            }
-
-            return (
+          {paginationRange.map((page, idx) =>
+            page === "..." ? (
+              <span key={`dots-${idx}`} className="px-3 py-1 text-gray-400">
+                ...
+              </span>
+            ) : (
               <a
                 key={`page-${page}`}
                 href={`/browse/${type}?page=${page}`}
@@ -107,10 +100,9 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
               >
                 {page}
               </a>
-            );
-          })}
+            )
+          )}
 
-          {/* Next Button */}
           {currentPage < totalPages && (
             <a
               href={`/browse/${type}?page=${currentPage + 1}`}
