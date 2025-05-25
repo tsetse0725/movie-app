@@ -1,5 +1,3 @@
-// app/browse/[type]/page.tsx
-
 import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
@@ -7,6 +5,40 @@ import { notFound } from "next/navigation";
 interface PageProps {
   params: { type: string };
   searchParams?: { page?: string };
+}
+
+// 📌 Smart pagination function
+function getPaginationRange(
+  current: number,
+  total: number
+): (number | string)[] {
+  const delta = 2;
+  const range: number[] = [];
+  const rangeWithDots: (number | string)[] = [];
+
+  const left = Math.max(2, current - delta);
+  const right = Math.min(total - 1, current + delta);
+
+  for (let i = 1; i <= total; i++) {
+    if (i === 1 || i === total || (i >= left && i <= right)) {
+      range.push(i);
+    }
+  }
+
+  let last: number | undefined;
+  for (let i of range) {
+    if (last !== undefined) {
+      if (i - last === 2) {
+        rangeWithDots.push(last + 1);
+      } else if (i - last > 2) {
+        rangeWithDots.push("...");
+      }
+    }
+    rangeWithDots.push(i);
+    last = i;
+  }
+
+  return rangeWithDots;
 }
 
 export default async function BrowsePage({ params, searchParams }: PageProps) {
@@ -23,16 +55,10 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
   if (!fetchFunc) return notFound();
 
   const allData = await fetchFunc(currentPage);
-  const allMovies = allData.results;
+  const movies = allData.results;
+  const totalPages = allData.total_pages;
 
-  const moviesPerPage = 10;
-  const totalPages = Math.ceil(allMovies.length / moviesPerPage);
-
-  const startIndex = (currentPage - 1) * moviesPerPage;
-  const paginatedMovies = allMovies.slice(
-    startIndex,
-    startIndex + moviesPerPage
-  );
+  const paginationRange = getPaginationRange(currentPage, totalPages);
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-10">
@@ -41,14 +67,14 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
       </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-8">
-        {paginatedMovies.map((movie: any) => (
+        {movies.map((movie: any) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
 
       {/* Pagination */}
       <div className="flex justify-end items-center mt-4">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 flex-wrap">
           {/* Previous Button */}
           {currentPage > 1 && (
             <a
@@ -59,20 +85,27 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
             </a>
           )}
 
-          {/* Page Numbers */}
-          {Array.from({ length: totalPages }).map((_, index) => {
-            const pageNum = index + 1;
+          {/* Smart Page Buttons */}
+          {paginationRange.map((page, idx) => {
+            if (page === "...") {
+              return (
+                <span key={`dots-${idx}`} className="px-3 py-1 text-gray-400">
+                  ...
+                </span>
+              );
+            }
+
             return (
               <a
-                key={pageNum}
-                href={`/browse/${type}?page=${pageNum}`}
+                key={`page-${page}`}
+                href={`/browse/${type}?page=${page}`}
                 className={`px-3 py-1 border rounded text-sm font-medium transition ${
-                  pageNum === currentPage
+                  page === currentPage
                     ? "bg-blue-600 text-white"
                     : "bg-white text-black dark:bg-zinc-700 dark:text-white"
                 }`}
               >
-                {pageNum}
+                {page}
               </a>
             );
           })}
