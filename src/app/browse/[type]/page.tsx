@@ -2,7 +2,7 @@ import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
 
-// ✅ Type тодорхойлсон функц
+// Pagination функц — type тодорхойлсон
 function getPaginationRange(
   current: number,
   total: number
@@ -36,27 +36,20 @@ function getPaginationRange(
   return rangeWithDots;
 }
 
-// ✅ Function typing, `params`, `searchParams`, `movie`
-interface Movie {
-  id: number;
-  title: string;
-  poster_path: string;
-  vote_average: number;
-  release_date: string;
-}
-
-interface PageProps {
+// ✅ Буруу PageProps ашиглалгүйгээр INLINE typing хийсэн хувилбар
+export default async function BrowsePage({
+  params,
+  searchParams,
+}: {
   params: { type: string };
   searchParams?: { page?: string };
-}
-
-export default async function BrowsePage({ params, searchParams }: PageProps) {
+}) {
   const { type } = params;
   const currentPage = parseInt(searchParams?.page || "1");
 
   const fetchMap: Record<
     string,
-    (page: number) => Promise<{ results: Movie[]; total_pages: number }>
+    (page: number) => Promise<{ results: any[]; total_pages: number }>
   > = {
     upcoming: GetUpcomingApi,
     popular: GetPopularApi,
@@ -66,9 +59,9 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
   const fetchFunc = fetchMap[type];
   if (!fetchFunc) return notFound();
 
-  const allData = await fetchFunc(currentPage);
-  const movies = allData.results;
-  const totalPages = allData.total_pages;
+  const data = await fetchFunc(currentPage);
+  const movies = data.results;
+  const totalPages = data.total_pages;
 
   const paginationRange = getPaginationRange(currentPage, totalPages);
 
@@ -79,11 +72,12 @@ export default async function BrowsePage({ params, searchParams }: PageProps) {
       </h1>
 
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6 mb-8">
-        {movies.map((movie: Movie) => (
+        {movies.map((movie) => (
           <MovieCard key={movie.id} movie={movie} />
         ))}
       </div>
 
+      {/* Pagination */}
       <div className="flex justify-end items-center mt-4">
         <div className="flex items-center gap-2 flex-wrap">
           {currentPage > 1 && (
