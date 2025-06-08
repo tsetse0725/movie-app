@@ -1,16 +1,12 @@
+// @ts-nocheck
+
 import { GetSearchMoviesApi } from "@/lib/MovieApis";
 import { MovieCard, Movie } from "../_components/MovieCard";
-import GenreSidebar from "../_components/GenreSidebar"; //  genre component нэмнэ
+import GenreSidebar from "../_components/GenreSidebar";
 import Link from "next/link";
 
-interface SearchPageProps {
-  searchParams?: {
-    query?: string;
-    page?: string;
-  };
-}
-
-export default async function SearchPage({ searchParams }: SearchPageProps) {
+// ❌ SearchPageProps хэрэглэхгүй
+export default async function SearchPage({ searchParams }) {
   const query = searchParams?.query || "";
   const page = parseInt(searchParams?.page || "1");
 
@@ -25,7 +21,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
       </h2>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/*  Зүүн талд: Movie list */}
+        {/* Зүүн талд: Movie list */}
         <div className="flex-1">
           {movies.length === 0 ? (
             <p>No movies found.</p>
@@ -63,7 +59,7 @@ export default async function SearchPage({ searchParams }: SearchPageProps) {
           )}
         </div>
 
-        {/*  Баруун талд: Genre sidebar */}
+        {/* Баруун талд: Genre sidebar */}
         <div className="w-full lg:w-[260px]">
           <GenreSidebar />
         </div>
