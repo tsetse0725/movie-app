@@ -8,10 +8,9 @@ import {
   GetMovieCreditsApi,
   GetMovieVideosApi,
   GetSimilarMoviesApi,
-  GetUpcomingApi, // ⬅️ SSG-д ашиглая
+  GetUpcomingApi,
 } from "@/lib/MovieApis";
 
-// ✅ Movie Details Page
 export default async function DetailPage({ params }) {
   const rawId = decodeURIComponent(params.id);
   if (!/^\d+$/.test(rawId)) throw new Error("Invalid ID");
@@ -41,21 +40,19 @@ export default async function DetailPage({ params }) {
   );
 }
 
-// ✅ Static params generate with axios (GetUpcomingApi)
+// ✅ Static params for SSG
 export async function generateStaticParams() {
   try {
-    const data = await GetUpcomingApi(); // ← таалагдсан API-гаа ашигла
+    const data = await GetUpcomingApi();
+    console.log("✅ Generating static paths:", data?.results?.length);
 
-    if (!data?.results) {
-      console.error("❌ No results from TMDB in generateStaticParams");
-      return [];
-    }
+    if (!data?.results) return [];
 
     return data.results.map((movie) => ({
       id: movie.id.toString(),
     }));
   } catch (error) {
-    console.error("❌ Error fetching static params:", error);
+    console.error("❌ Failed to generate static params:", error);
     return [];
   }
 }

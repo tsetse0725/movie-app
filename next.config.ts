@@ -1,13 +1,10 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
-  /* config options here */
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  env: {
+    TMDB_BEARER_TOKEN: process.env.TMDB_BEARER_TOKEN,
+  },
   images: {
-    remotePatterns: [
-      {
-        hostname: "image.tmdb.org",
-      },
-    ],
+    domains: ["image.tmdb.org"],
   },
 };
 
