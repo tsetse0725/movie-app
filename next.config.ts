@@ -1,11 +1,11 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
-  env: {
-    TMDB_BEARER_TOKEN: process.env.TMDB_BEARER_TOKEN,
+  experimental: {
+    appDir: true, // `app/` directory-г зөвшөөрнө
   },
-  images: {
-    domains: ["image.tmdb.org"],
-  },
+  srcDir: "src", // `src/` фолдерыг root гэж үзнэ
+  reactStrictMode: true,
 };
 
 export default nextConfig;
