@@ -1,14 +1,11 @@
-import type { NextConfig } from "next";
+/** @type {import('next').NextConfig} */
 
-const nextConfig: NextConfig = {
-  /* config options here */
-  images: {
-    remotePatterns: [
-      {
-        hostname: "image.tmdb.org",
-      },
-    ],
+const nextConfig = {
+  experimental: {
+    appDir: true, // `app/` directory-г зөвшөөрнө
   },
+  srcDir: "src", // `src/` фолдерыг root гэж үзнэ
+  reactStrictMode: true,
 };
 
 export default nextConfig;
