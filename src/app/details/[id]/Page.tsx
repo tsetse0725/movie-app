@@ -1,77 +1,66 @@
-import DetailPageSkeleton from "@/components/skeleton/DetailPageSkeleton";
-import { Detail } from "@/app/_components/Detail";
-import {
-  GetMovieDetailApi,
-  GetMovieCreditsApi,
-  GetMovieVideosApi,
-  GetSimilarMoviesApi,
-  GetUpcomingApi,
-} from "@/lib/MovieApis";
+import axios from "axios";
 
-type PageProps = {
-  params: {
-    id: string;
-  };
-};
+const getHeaders = () => ({
+  "Content-Type": "application/json",
+  Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
+});
 
-type Video = {
-  type: string;
-  site: string;
-  key: string;
-};
-
-type Movie = {
-  id: number | string;
-  // Та өөрийн movie object-д тохирох property-г энд нэмнэ
-};
-
-export default async function DetailPage({ params }: PageProps) {
-  const rawId = decodeURIComponent(params.id ?? "");
-  if (!/^\d+$/.test(rawId)) return <div>Invalid ID</div>;
-  const id = rawId;
-
-  let movie, credits, videos: { results: Video[] }, similar;
+// Киноны дэлгэрэнгүй
+export const GetMovieDetailApi = async (id: string | number) => {
+  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
   try {
-    [movie, credits, videos, similar] = await Promise.all([
-      GetMovieDetailApi(id),
-      GetMovieCreditsApi(id),
-      GetMovieVideosApi(id),
-      GetSimilarMoviesApi(id),
-    ]);
-  } catch (error) {
-    // error нь unknown тул message авахын тулд type guard ашиглах
-    const errMsg =
-      error instanceof Error ? error.message : "Unknown error occured";
-    return <div>Error loading movie details: {errMsg}</div>;
+    const result = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+      { headers: getHeaders() }
+    );
+    return result.data;
+  } catch (error: any) {
+    console.error("TMDB GetMovieDetailApi error:", error?.response?.status, error?.response?.data || error.message);
+    throw error;
   }
+};
 
-  if (!movie || !credits || !videos || !similar) {
-    return <DetailPageSkeleton />;
-  }
-
-  const trailer = videos?.results?.find(
-    (v: Video) => v.type === "Trailer" && v.site === "YouTube"
-  );
-
-  return (
-    <Detail
-      movie={movie}
-      credits={credits}
-      trailerKey={trailer?.key || ""}
-      similar={similar?.results || []}
-    />
-  );
-}
-
-// ✅ Static params for SSG
-export async function generateStaticParams() {
+// Киноны уран бүтээлчид (credits)
+export const GetMovieCreditsApi = async (id: string | number) => {
+  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
   try {
-    const data = await GetUpcomingApi();
-    if (!data?.results) return [];
-    return data.results.map((movie: Movie) => ({
-      id: movie.id.toString(),
-    }));
-  } catch (error) {
-    return [];
+    const result = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
+      { headers: getHeaders() }
+    );
+    return result.data;
+  } catch (error: any) {
+    console.error("TMDB GetMovieCreditsApi error:", error?.response?.status, error?.response?.data || error.message);
+    throw error;
   }
-}
+};
+
+// Киноны видеонууд (trailer, teaser)
+export const GetMovieVideosApi = async (id: string | number) => {
+  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
+  try {
+    const result = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+      { headers: getHeaders() }
+    );
+    return result.data;
+  } catch (error: any) {
+    console.error("TMDB GetMovieVideosApi error:", error?.response?.status, error?.response?.data || error.message);
+    throw error;
+  }
+};
+
+// Төстэй кинонууд
+export const GetSimilarMoviesApi = async (id: string | number, page = 1) => {
+  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
+  try {
+    const result = await axios.get(
+      `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=${page}`,
+      { headers: getHeaders() }
+    );
+    return result.data;
+  } catch (error: any) {
+    console.error("TMDB GetSimilarMoviesApi error:", error?.response?.status, error?.response?.data || error.message);
+    throw error;
+  }
+};
