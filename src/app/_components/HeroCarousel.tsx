@@ -22,13 +22,14 @@ type Movie = {
 interface Props {
   movies: Movie[];
   onPlay: (key: string) => void;
+  plugin?: any;
 }
 
-export const HeroCarousel = ({ movies, onPlay }: Props) => {
+export const HeroCarousel = ({ movies, onPlay, plugin }: Props) => {
   if (movies.length === 0) return null;
 
   return (
-    <Carousel className="w-full">
+    <Carousel className="w-full" plugins={ plugin ? [plugin] : []}>
       <CarouselContent>
         {movies.map((movie) => (
           <CarouselItem key={movie.id}>
@@ -38,7 +39,7 @@ export const HeroCarousel = ({ movies, onPlay }: Props) => {
                   src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
                   alt={movie.title}
                   fill
-                  objectFit="cover"
+                  style={{ objectFit: "cover" }}
                 />
               </Link>
 
