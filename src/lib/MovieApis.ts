@@ -1,6 +1,6 @@
 import axios from "axios";
 
-// Токен болон header-уудыг авах функц
+// TMDB API-ийн header-уудыг бэлтгэх функц
 const getHeaders = () => ({
   "Content-Type": "application/json",
   Authorization: `Bearer ${process.env.TMDB_BEARER_TOKEN}`,
@@ -8,135 +8,90 @@ const getHeaders = () => ({
 
 // Upcoming кино авах
 export const GetUpcomingApi = async (page = 1) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetUpcomingApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=${page}`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Upcoming movies not found");
+  return result.data;
 };
 
 // Popular кино авах
 export const GetPopularApi = async (page = 1) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetPopularApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/popular?language=en-US&page=${page}`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Popular movies not found");
+  return result.data;
 };
 
 // Top Rated кино авах
 export const GetTopRatedApi = async (page = 1) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetTopRatedApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/top_rated?language=en-US&page=${page}`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Top rated movies not found");
+  return result.data;
 };
 
 // Киноны дэлгэрэнгүй авах
 export const GetMovieDetailApi = async (id: string | number) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetMovieDetailApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}?language=en-US`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Movie details not found");
+  return result.data;
 };
 
-// Уран бүтээлчид (credits)
+// Киноны уран бүтээлчид (credits)
 export const GetMovieCreditsApi = async (id: string | number) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetMovieCreditsApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/credits?language=en-US`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Movie credits not found");
+  return result.data;
 };
 
-// Видео (trailer, teaser)
+// Киноны видеонууд (trailer, teaser)
 export const GetMovieVideosApi = async (id: string | number) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetMovieVideosApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Movie videos not found");
+  return result.data;
 };
 
 // Төстэй кинонууд
 export const GetSimilarMoviesApi = async (id: string | number, page = 1) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=${page}`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetSimilarMoviesApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=${page}`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Similar movies not found");
+  return result.data;
 };
 
 // Жанраар кино авах
 export const GetMoviesByGenre = async (genreId: string | number, page = 1) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=en-US&page=${page}`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetMoviesByGenre error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/discover/movie?with_genres=${genreId}&language=en-US&page=${page}`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Movies by genre not found");
+  return result.data;
 };
 
-// Хайлт хийх
+// Кино хайлт хийх
 export const GetSearchMoviesApi = async (query: string, page = 1) => {
-  console.log("TMDB_BEARER_TOKEN:", process.env.TMDB_BEARER_TOKEN);
-  try {
-    const result = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${page}`,
-      { headers: getHeaders() }
-    );
-    return result.data;
-  } catch (error: any) {
-    console.error("TMDB GetSearchMoviesApi error:", error?.response?.status, error?.response?.data || error.message);
-    throw error;
-  }
+  const result = await axios.get(
+    `https://api.themoviedb.org/3/search/movie?query=${encodeURIComponent(query)}&language=en-US&page=${page}`,
+    { headers: getHeaders() }
+  );
+  if (!result.data) throw new Error("Search movies not found");
+  return result.data;
 };
