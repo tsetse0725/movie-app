@@ -20,14 +20,7 @@ export default function HeroSection() {
   const [selectedTrailerKey, setSelectedTrailerKey] = useState<string | null>(
     null
   );
-
-  // Autoplay plugin ref
-  const plugin = useRef(
-    Autoplay({
-      delay: 3000,
-      stopOnInteraction: false,
-    })
-  );
+  const plugin = useRef(Autoplay({ delay: 3000 }));
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,7 +53,7 @@ export default function HeroSection() {
 
   return (
     <div className="relative">
-      <HeroCarousel movies={movies} onPlay={handlePlayTrailer} plugin={plugin.current} />
+      <HeroCarousel movies={movies} onPlay={handlePlayTrailer} />
 
       {showTrailer && selectedTrailerKey && (
         <div

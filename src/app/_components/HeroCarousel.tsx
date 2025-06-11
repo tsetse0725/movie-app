@@ -7,14 +7,16 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 type Movie = {
   id: number;
   title: string;
   overview: string;
-  backdrop_path: string;
+  backdrop_path?: string;
   vote_average: number;
   trailerKey: string;
 };
@@ -22,25 +24,35 @@ type Movie = {
 interface Props {
   movies: Movie[];
   onPlay: (key: string) => void;
-  plugin?: any;
 }
 
-export const HeroCarousel = ({ movies, onPlay, plugin }: Props) => {
+export const HeroCarousel = ({ movies, onPlay }: Props) => {
   if (movies.length === 0) return null;
 
+  const [plugin] = useState(() =>
+    Autoplay({ delay: 3000, stopOnInteraction: false })
+  );
+
   return (
-    <Carousel className="w-full" plugins={ plugin ? [plugin] : []}>
+    <Carousel plugins={[plugin]} className="w-full">
       <CarouselContent>
         {movies.map((movie) => (
           <CarouselItem key={movie.id}>
             <section className="relative w-full h-[600px] overflow-hidden xl:h-[1000px]">
               <Link href={`/details/${movie.id}`}>
-                <Image
-                  src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
-                  alt={movie.title}
-                  fill
-                  style={{ objectFit: "cover" }}
-                />
+                {movie.backdrop_path ? (
+                  <Image
+                    src={`https://image.tmdb.org/t/p/original${movie.backdrop_path}`}
+                    alt={movie.title}
+                    fill
+                    className="object-cover"
+                    priority
+                  />
+                ) : (
+                  <div className="w-full h-full bg-black flex items-center justify-center text-white">
+                    No image available
+                  </div>
+                )}
               </Link>
 
               <div className="absolute inset-0 bg-black/40" />
