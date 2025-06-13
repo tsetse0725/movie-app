@@ -1,3 +1,5 @@
+// File: src/app/movie/[movieId]/page.tsx
+
 // @ts-nocheck
 
 import { Suspense } from "react";
@@ -14,8 +16,8 @@ import {
 export const dynamic = "force-dynamic";
 
 export default async function DetailPage({ params }) {
-  const rawId = decodeURIComponent(params.id);
-  if (!/^\d+$/.test(rawId)) return notFound();
+  const rawId = decodeURIComponent(params.movieId);
+  if (!/^[0-9]+$/.test(rawId)) return notFound();
   const id = rawId;
 
   const [movie, credits, videos, similar] = await Promise.all([
@@ -25,7 +27,7 @@ export default async function DetailPage({ params }) {
     GetSimilarMoviesApi(id),
   ]);
 
-  const trailer = videos.results.find(
+  const trailer = videos?.results?.find(
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
 
@@ -35,7 +37,7 @@ export default async function DetailPage({ params }) {
         movie={movie}
         credits={credits}
         trailerKey={trailer?.key || ""}
-        similar={similar.results}
+        similar={similar?.results || []}
       />
     </Suspense>
   );

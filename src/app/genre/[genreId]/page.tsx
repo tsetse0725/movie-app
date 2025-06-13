@@ -5,9 +5,8 @@ import { Movie, MovieCard } from "@/app/_components/MovieCard";
 import GenreSidebar from "@/app/_components/GenreSidebar";
 import Link from "next/link";
 
-// ❌ PageProps хэрэглэхгүй, TypeScript-д тулгахгүй!
 export default async function GenrePage({ params, searchParams }) {
-  const genreId = parseInt(params.id);
+  const genreId = parseInt(params.genreId);
   const page = parseInt(searchParams?.page || "1");
   const data = await GetMoviesByGenre(genreId, page);
 
@@ -15,7 +14,7 @@ export default async function GenrePage({ params, searchParams }) {
   const totalPages = data.total_pages;
   const totalResults = data.total_results;
 
-  const genreMap = {
+  const genreMap: { [key: number]: string } = {
     28: "Action",
     12: "Adventure",
     16: "Animation",
@@ -42,12 +41,10 @@ export default async function GenrePage({ params, searchParams }) {
   return (
     <div className="max-w-7xl mx-auto p-4">
       <div className="flex flex-col md:flex-row gap-6">
-        {/* Зүүн талын жанр sidebar */}
         <aside className="w-full md:w-64">
           <GenreSidebar />
         </aside>
 
-        {/* Кинонуудын жагсаалт */}
         <section className="flex-1">
           <h1 className="text-xl font-semibold mb-6">
             {totalResults} titles in “{genreName}”
@@ -59,7 +56,6 @@ export default async function GenrePage({ params, searchParams }) {
             ))}
           </div>
 
-          {/* Pagination */}
           <div className="flex justify-center items-center gap-3 mt-10">
             {page > 1 && (
               <Link
