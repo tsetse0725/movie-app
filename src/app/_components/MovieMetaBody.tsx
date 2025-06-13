@@ -15,7 +15,7 @@ export const MovieMetaBody = ({ movie, credits }: Props) => {
 
   return (
     <div className="space-y-6">
-      {/* Genres */}
+
       <div className="flex flex-wrap gap-2">
         {movie.genres.map((g) => (
           <span
@@ -27,12 +27,11 @@ export const MovieMetaBody = ({ movie, credits }: Props) => {
         ))}
       </div>
 
-      {/* Overview */}
+
       <p className="text-sm text-gray-700 dark:text-gray-300 leading-relaxed">
         {movie.overview}
       </p>
 
-      {/* Credits */}
       <div className="space-y-4 text-sm">
         <div className="grid grid-cols-[auto_1fr] gap-x-4 items-start border-b pb-2">
           <strong className="text-black dark:text-white">Director</strong>

@@ -11,7 +11,7 @@ interface TrailerPlayerProps {
 export const TrailerPlayer = ({
   backdrop,
   trailerKey,
-  variant = "default", // default утга
+  variant = "default", 
 }: TrailerPlayerProps) => {
   const [showTrailer, setShowTrailer] = useState(false);
 
@@ -30,14 +30,14 @@ export const TrailerPlayer = ({
 
   return (
     <div className="relative w-full h-[300px] sm:h-[400px] lg:h-[500px] overflow-hidden rounded shadow">
-      {/* Зураг */}
+      
       <img
         src={`https://image.tmdb.org/t/p/original${backdrop}`}
         alt="Backdrop"
         className="w-full h-full object-cover"
       />
 
-      {/* Хар бүрхүүл */}
+
       <div className="absolute inset-0 bg-black/50">
         {trailerKey && (
           <>
@@ -60,7 +60,7 @@ export const TrailerPlayer = ({
                 <span className="text-sm font-medium">Play trailer</span>
               </button>
             ) : (
-              // 👉 HeroSection style товч
+ 
               <div className="flex items-center justify-center h-full">
                 <button
                   onClick={openModal}
@@ -74,7 +74,7 @@ export const TrailerPlayer = ({
         )}
       </div>
 
-      {/* Popup Modal */}
+
       {showTrailer && (
         <div
           className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center"

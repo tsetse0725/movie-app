@@ -19,7 +19,7 @@ export const MoreLikeThis = ({ similar }: { similar: Movie[] }) => {
 
   return (
     <div className="mt-10">
-      {/* Title + Toggle */}
+
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-semibold">More like this</h2>
         {similar.length > 10 && (
@@ -32,7 +32,7 @@ export const MoreLikeThis = ({ similar }: { similar: Movie[] }) => {
         )}
       </div>
 
-      {/* Movie Cards */}
+
       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4">
         {moviesToShow.map((m) => (
           <Link href={`/details/${m.id}`} key={m.id}>

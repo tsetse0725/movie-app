@@ -4,7 +4,7 @@ import { GetUpcomingApi, GetPopularApi, GetTopRatedApi } from "@/lib/MovieApis";
 import { MovieCard } from "@/app/_components/MovieCard";
 import { notFound } from "next/navigation";
 
-// Кино төрөл
+
 type Movie = {
   id: number;
   title: string;
@@ -13,7 +13,7 @@ type Movie = {
   release_date: string;
 };
 
-// Pagination функц
+
 function getPaginationRange(current: number, total: number): (number | string)[] {
   const delta = 2;
   const range: number[] = [];
@@ -44,7 +44,7 @@ function getPaginationRange(current: number, total: number): (number | string)[]
   return rangeWithDots;
 }
 
-// ❌ params/searchParams type тодорхойлоогүй
+
 export default async function BrowsePage({ params, searchParams }) {
   const { type } = params;
   const currentPage = parseInt(searchParams?.page || "1");
@@ -120,7 +120,7 @@ export default async function BrowsePage({ params, searchParams }) {
   );
 }
 
-// Static Path
+
 export async function generateStaticParams() {
   return [
     { type: "popular" },

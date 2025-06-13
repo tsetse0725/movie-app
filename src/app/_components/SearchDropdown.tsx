@@ -48,7 +48,7 @@ export default function SearchDropdown() {
 
   return (
     <div className="relative w-full max-w-sm">
-      {/*  Input хэсгийг тусад нь */}
+
       <SearchInput
         query={query}
         onChange={setQuery}
@@ -56,7 +56,7 @@ export default function SearchDropdown() {
         onKeyDown={handleKeyDown}
       />
 
-      {/* Dropdown хэсэг */}
+
       {showDropdown && (
         <div className="absolute mt-1 w-full bg-white dark:bg-gray-900 border rounded shadow z-50 max-h-80 overflow-auto">
           {loading ? (

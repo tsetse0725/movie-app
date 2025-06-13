@@ -1,4 +1,4 @@
-// File: src/app/movie/[movieId]/page.tsx
+
 
 // @ts-nocheck
 

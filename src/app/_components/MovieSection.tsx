@@ -11,7 +11,7 @@ type Props = {
 export default function MovieSection({ title, movies, type }: Props) {
   return (
     <section className="w-full px-4 md:px-6 lg:px-8 py-8">
-      {/* Title + See more */}
+
       <div className="flex justify-between items-center mb-6">
         <h2 className="text-xl md:text-2xl font-bold">{title}</h2>
 

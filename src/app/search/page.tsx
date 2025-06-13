@@ -5,7 +5,6 @@ import { MovieCard, Movie } from "../_components/MovieCard";
 import GenreSidebar from "../_components/GenreSidebar";
 import Link from "next/link";
 
-// ❌ SearchPageProps хэрэглэхгүй
 export default async function SearchPage({ searchParams }) {
   const query = searchParams?.query || "";
   const page = parseInt(searchParams?.page || "1");
@@ -21,7 +20,7 @@ export default async function SearchPage({ searchParams }) {
       </h2>
 
       <div className="flex flex-col lg:flex-row gap-8">
-        {/* Зүүн талд: Movie list */}
+
         <div className="flex-1">
           {movies.length === 0 ? (
             <p>No movies found.</p>
@@ -33,7 +32,7 @@ export default async function SearchPage({ searchParams }) {
                 ))}
               </div>
 
-              {/* Pagination */}
+
               <div className="flex justify-center items-center gap-4 mt-8">
                 {page > 1 && (
                   <Link
@@ -59,7 +58,7 @@ export default async function SearchPage({ searchParams }) {
           )}
         </div>
 
-        {/* Баруун талд: Genre sidebar */}
+
         <div className="w-full lg:w-[260px]">
           <GenreSidebar />
         </div>

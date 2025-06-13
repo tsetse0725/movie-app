@@ -24,7 +24,7 @@ export default function Footer() {
   return (
     <footer className="bg-[#3f34c4] text-white px-4 sm:px-6 py-10">
       <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-start gap-10">
-        {/* Logo */}
+
         <div className="flex flex-col gap-2">
           <div className="flex items-center gap-2">
             <Film className="text-white" />
@@ -35,9 +35,8 @@ export default function Footer() {
           </p>
         </div>
 
-        {/* Contact + Social */}
         <div className="flex flex-col md:flex-row gap-30 text-sm">
-          {/* Contact */}
+
           <div className="flex flex-col gap-2">
             <h4 className="font-semibold">Contact Information</h4>
             <div className="flex items-center gap-2">
@@ -50,7 +49,7 @@ export default function Footer() {
             </div>
           </div>
 
-          {/* Social Media */}
+    
           <div className="flex flex-col md:items-start md:text-left items-center text-center">
             <h4 className="font-semibold mb-2">Follow us</h4>
             <div className="flex flex-col md:flex-row md:gap-4 gap-1">
