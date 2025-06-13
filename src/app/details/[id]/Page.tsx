@@ -1,4 +1,3 @@
-// src/app/details/[id]/page.tsx
 // @ts-nocheck
 
 import { Suspense } from "react";
