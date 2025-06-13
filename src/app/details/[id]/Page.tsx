@@ -1,4 +1,3 @@
-// src/app/details/[id]/page.tsx
 // @ts-nocheck
 
 import DetailPageSkeleton from "@/components/skeleton/DetailPageSkeleton";
@@ -9,21 +8,20 @@ import {
   GetMovieCreditsApi,
   GetMovieVideosApi,
   GetSimilarMoviesApi,
-  GetUpcomingApi,
 } from "@/lib/MovieApis";
 import { notFound } from "next/navigation";
 
-// ✅ Dynamic fallback зөвшөөрөх — Vercel-д 404 үүсгэхгүй
+// ✅ Энэ нь dynamic route-уудыг runtime дээр ачаалуулахыг зөвшөөрнө
 export const dynamic = "force-dynamic";
 
 export default async function DetailPage({ params }) {
   const rawId = decodeURIComponent(params.id);
 
-  // ✅ ID шалгах: зөвхөн тоо байх ёстой
+  // ✅ ID зөв эсэхийг шалгах
   if (!/^\d+$/.test(rawId)) return notFound();
   const id = rawId;
 
-  // ✅ Promise.all — бүх өгөгдлийг зэрэг татна
+  // ✅ Promise.all ашиглан өгөгдлийг зэрэг татна
   const [movie, credits, videos, similar] = await Promise.all([
     GetMovieDetailApi(id),
     GetMovieCreditsApi(id),
@@ -31,6 +29,7 @@ export default async function DetailPage({ params }) {
     GetSimilarMoviesApi(id),
   ]);
 
+  // ✅ YouTube trailer авах
   const trailer = videos.results.find(
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
@@ -45,20 +44,4 @@ export default async function DetailPage({ params }) {
       />
     </Suspense>
   );
-}
-
-// ✅ Static params for SSG — зөвхөн Vercel build үед ажиллана
-export async function generateStaticParams() {
-  try {
-    const data = await GetUpcomingApi();
-
-    if (!data?.results) return [];
-
-    return data.results.map((movie) => ({
-      id: movie.id.toString(),
-    }));
-  } catch (error) {
-    console.error("❌ Failed to generate static params:", error);
-    return [];
-  }
 }
