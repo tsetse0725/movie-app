@@ -1,3 +1,4 @@
+// src/app/details/[id]/page.tsx
 // @ts-nocheck
 
 import { Suspense } from "react";
@@ -11,18 +12,13 @@ import {
   GetSimilarMoviesApi,
 } from "@/lib/MovieApis";
 
-// ✅ Энэ нь Vercel дээр dynamic route-ыг зөв ажиллуулна
 export const dynamic = "force-dynamic";
 
 export default async function DetailPage({ params }) {
   const rawId = decodeURIComponent(params.id);
-
-  // 🔒 ID зөв форматаар ирж байгаа эсэхийг шалгана
   if (!/^\d+$/.test(rawId)) return notFound();
-
   const id = rawId;
 
-  // 🚀 Бүх мэдээллийг зэрэг асууж авна
   const [movie, credits, videos, similar] = await Promise.all([
     GetMovieDetailApi(id),
     GetMovieCreditsApi(id),
@@ -30,7 +26,6 @@ export default async function DetailPage({ params }) {
     GetSimilarMoviesApi(id),
   ]);
 
-  // 🎬 YouTube trailer олж авах
   const trailer = videos.results.find(
     (v) => v.type === "Trailer" && v.site === "YouTube"
   );
