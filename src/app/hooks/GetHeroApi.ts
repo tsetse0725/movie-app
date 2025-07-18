@@ -14,7 +14,7 @@ export const GetHeroApi = async () => {
 
   const movies = res?.data?.results?.slice(0, 5) || [];
 
-  //  Трейлер key-г кино бүр дээр авч нэмэх
+
   const moviesWithTrailers = await Promise.all(
     movies.map(async (movie: any) => {
       try {
@@ -31,7 +31,7 @@ export const GetHeroApi = async () => {
 
         return {
           ...movie,
-          trailerKey: trailer?.key || "", // Трейлер байвал нэмнэ
+          trailerKey: trailer?.key || "", 
         };
       } catch (error) {
         console.warn(`🎥 Error fetching trailer for ${movie.title}:`, error);

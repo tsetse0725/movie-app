@@ -22,7 +22,7 @@ export default function Header() {
 
   return (
     <header className="flex items-center justify-between px-4 py-3 border-b dark:border-gray-700 relative">
-      {/* Зүүн тал: Logo + Genre */}
+
       <div className="flex items-center gap-2">
         {!isDesktop && <GenreSelector />}
         <Link
@@ -34,13 +34,13 @@ export default function Header() {
         </Link>
       </div>
 
-      {/* Desktop хайлт: Genre + Autocomplete */}
+
       <div className="hidden md:flex items-center gap-2 flex-1 justify-center max-w-[600px]">
         <GenreSelector />
         <SearchDropdown />
       </div>
 
-      {/* Theme toggle + Mobile search toggle */}
+
       <div className="flex items-center gap-2">
         <button
           onClick={() => setShowMobileSearch((prev) => !prev)}
@@ -65,7 +65,7 @@ export default function Header() {
         </button>
       </div>
 
-      {/*  Mobile хайлт */}
+
       {showMobileSearch && (
         <div className="absolute top-full left-0 w-full px-4 py-2 bg-white dark:bg-gray-900 shadow-md md:hidden animate-fade-in z-50">
           <SearchDropdown />

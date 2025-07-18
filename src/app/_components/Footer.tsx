@@ -16,9 +16,9 @@ export default function Footer() {
         }
       );
       const data = await res.json();
-      console.log("🎬 Movie Detail:", data);
+      console.log(" Movie Detail:", data);
     } catch (error) {
-      console.error("❌ Error:", error);
+      console.error(" Error:", error);
     }
   };
   return (
